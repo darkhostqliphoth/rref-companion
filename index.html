@@ -1,98 +1,195 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RREF Companion | Linear Algebra</title>
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f7fb;
-      color: #172b4d;
-    }
-
-    header {
-      background: #142d50;
-      color: white;
-      padding: 28px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 36px;
-    }
-
-    main {
-      max-width: 800px;
-      margin: 55px auto;
-      padding: 35px;
-      background: white;
-      border-radius: 14px;
-      box-shadow: 0 5px 24px #00000012;
-      text-align: center;
-    }
-
-    h2 { color: #153c70; }
-
-    p {
-      line-height: 1.7;
-      font-size: 17px;
-    }
-
-    .status {
-      display: inline-block;
-      background: #e8f0fc;
-      color: #174b89;
-      padding: 12px 22px;
-      border-radius: 25px;
-      margin-top: 22px;
-      font-weight: 600;
-    }
-
-    footer {
-      text-align: center;
-      color: #64748b;
-      padding: 25px;
-      font-size: 14px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="RREF Companion: laboratorio gratuito de operaciones elementales por renglón, con fracciones exactas e historial paso a paso.">
+<title>RREF Companion · Laboratorio de Álgebra Lineal</title>
+<style>
+:root{color-scheme:light;--navy:#102641;--blue:#2258a8;--blue2:#174781;--ink:#182a40;--muted:#596c80;--border:#dce5ef;--surface:#fff;--wash:#f3f6fa;--good:#087652;--bad:#af3131;--focus:#e7ab38;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--wash);color:var(--ink)}
+header{background:linear-gradient(118deg,#102641 0%,#17406c 75%,#20538b 100%);color:#fff}
+.top{max-width:1180px;margin:auto;padding:28px 22px 34px}.eyebrow{font-size:12px;letter-spacing:.17em;font-weight:750;text-transform:uppercase;color:#bdd9f7}.brand{display:flex;gap:12px;align-items:center}.mark{display:grid;place-items:center;background:#ffffff1a;border:1px solid #ffffff44;border-radius:13px;width:51px;height:51px;color:#fff;font-size:25px;font-weight:750}.brand h1{font-size:clamp(25px,4vw,37px);letter-spacing:-.035em;margin:0}.top p{color:#d6e5f4;line-height:1.6;margin:15px 0 0;max-width:750px;font-size:15px}
+main{max-width:1180px;margin:auto;padding:24px 20px 34px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--border);border-radius:17px;padding:22px;box-shadow:0 6px 22px #15283a0a;margin-bottom:18px}.panel h2{font-size:18px;margin:0 0 8px;color:#193454}.panel h3{font-size:15px;margin:20px 0 8px;color:#193454}.mini{color:var(--muted);font-size:13px;line-height:1.55;margin:5px 0 15px}.line{display:flex;flex-wrap:wrap;gap:12px;align-items:end}label{display:block;font-size:13px;font-weight:700;color:#293e55;margin-bottom:6px}input,textarea,button{font:inherit}input,textarea{border:1px solid #bdccdc;border-radius:9px;padding:10px 11px;color:var(--ink);background:#fff}input:focus,textarea:focus,button:focus-visible{outline:3px solid #e8bc62;outline-offset:2px}input[type=number]{width:77px}input[type=checkbox]{accent-color:var(--blue);width:16px;height:16px}input[type=text]{min-width:0}button{background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:10px;padding:10px 15px;font-weight:650;cursor:pointer;transition:background .15s}button:hover{background:var(--blue2)}button.secondary{background:#edf3fc;color:#184b87;border-color:#dce7f6}button.secondary:hover{background:#dbe9fc}button:disabled{opacity:.5;cursor:not-allowed}.check{display:flex;align-items:center;gap:8px;padding:9px 0;margin:0;font-weight:500}.check input{margin:0}.editing{overflow:auto;padding:13px 3px 9px}.entry-matrix{display:inline-grid;grid-template-columns:repeat(var(--cols),minmax(58px,75px));gap:8px;border-left:3px solid #1f4e7d;border-right:3px solid #1f4e7d;padding:5px 13px}.entry-matrix input{width:100%;min-width:0;text-align:center;padding:9px 5px;font-variant-numeric:tabular-nums}.entry-matrix .augment{border-left:2px solid #8ca1b8;border-radius:0;padding-left:11px;margin-left:5px}.operation-input{width:100%;padding:13px;border:1.5px solid #8fa9c7;border-radius:10px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:16px;margin-top:2px}.samples{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 14px}.samples button{font-size:12px;padding:7px 9px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.help{padding:12px 13px;background:#f3f7fc;border:1px solid #e0e8f3;border-radius:10px;font-size:12px;color:#425a74;line-height:1.7}.help code{background:#e7eef8;border-radius:4px;padding:2px 4px;color:#183e75}.result{margin-top:14px;min-height:23px;color:var(--good);font-size:13px;font-weight:650;line-height:1.5}.result.error{color:var(--bad)}.badge{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:50px;background:#f0f3f7;font-size:12px;font-weight:700;color:#496075}.badge.success{background:#e8f7f0;color:#076946}.step{position:relative;padding:14px 0 17px;border-bottom:1px solid #e6edf4}.step:last-child{border:0}.step-title{font-size:13px;font-weight:700;margin-bottom:12px;color:#324965;overflow-wrap:anywhere}.step:last-child .step-title{color:#12549d}.step-count{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:7px;background:#edf2fb;color:#194c89;margin-right:7px}.math-scroll{max-width:100%;overflow:auto;padding:0 3px 2px}.display-matrix{display:inline-grid;grid-template-columns:repeat(var(--cols),minmax(32px,max-content));column-gap:20px;row-gap:10px;border-left:3px solid #315b84;border-right:3px solid #315b84;padding:12px 16px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums;font-size:15px}.display-matrix span{min-width:28px;text-align:center;white-space:nowrap}.display-matrix .augment{border-left:2px solid #8da7c2;padding-left:17px;margin-left:0}.empty{background:#f5f8fc;padding:22px;border-radius:12px;text-align:center;color:var(--muted);font-size:14px}#notes{width:100%;min-height:130px;resize:vertical}.right-sticky{position:sticky;top:15px}.note{border-left:3px solid #9eb4d1;padding:0 0 0 12px;color:#526b84;font-size:12px;line-height:1.7}.footer{text-align:center;color:#6c7e91;padding:12px 20px 38px;font-size:12px}.right-sticky .panel:last-child{margin-bottom:0}.btn-row{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px} .label-inline{display:flex;align-items:center;justify-content:space-between;gap:9px}
+[hidden]{display:none!important}.comparison{font-size:13px;line-height:1.55;padding:11px 13px;border:1px solid #dce7f6;border-radius:10px;background:#f2f7fd;color:#365576;margin:16px 0 0}.comparison.match{background:#e8f7f0;border-color:#c5e8d5;color:#076946}.comparison.waiting{background:#f3f6fa;border-color:#dce5ef;color:#526b84}
+@media(max-width:790px){.layout{grid-template-columns:1fr}.right-sticky{position:static}.top{padding:26px 20px}.panel{padding:18px}.right-sticky{display:contents}}@media(max-width:410px){.entry-matrix{grid-template-columns:repeat(var(--cols),minmax(45px,60px));gap:5px;padding:5px 9px}.entry-matrix input{padding:8px 3px}.display-matrix{column-gap:11px;padding:10px 11px;font-size:13px}}
+@media print{header{background:none;color:black}.top p,.eyebrow{color:black}.layout{display:block} .right-sticky,.btn-row,.samples,.help,.line, .result, .footer{display:none}.panel{box-shadow:none;border:none}.step{break-inside:avoid}}
+</style>
 </head>
 <body>
-
-  <header>
-    <h1>RREF Companion</h1>
-    <p>Interactive Linear Algebra Laboratory</p>
-  </header>
-
-  <main>
-    <h2>Reducción de matrices por renglones</h2>
-
-    <p>
-      Una herramienta educativa interactiva para
-      practicar operaciones elementales por renglón
-      y estudiar la forma escalonada reducida
-      de matrices.
-    </p>
-
-    <p>
-      Aprende a tu propio ritmo, construye cada
-      operación y analiza el procedimiento
-      paso a paso.
-    </p>
-
-    <div class="status">
-      Laboratorio en desarrollo
-    </div>
-  </main>
-
-  <footer>
-    RREF Companion | Herramienta académica gratuita
-  </footer>
-
+<header><div class="top"><div class="eyebrow">Laboratorio abierto de matemáticas</div><div class="brand"><span class="mark" aria-hidden="true">[ ]</span><h1>RREF Companion</h1></div><p>Practica operaciones elementales por renglón. Tú eliges cada transformación; el laboratorio verifica el cálculo y conserva el procedimiento, sin resolver automáticamente por ti.</p></div></header>
+<main><div class="layout"><div>
+<section class="panel" aria-labelledby="matrix-title">
+<h2 id="matrix-title">01 · Define tu matriz</h2>
+<p class="mini">Selecciona las dimensiones y escribe sus entradas. Puedes utilizar enteros, decimales y fracciones, por ejemplo <strong>-3/4</strong>.</p>
+<div class="line"><div><label for="rows">Renglones</label><input type="number" id="rows" min="1" max="8" value="2"></div><div><label for="cols">Columnas</label><input type="number" id="cols" min="1" max="8" value="3"></div><button id="dimensions" type="button" class="secondary">Actualizar tamaño</button><button id="example" type="button" class="secondary">Cargar ejemplo</button></div>
+<label class="check" for="augmented"><input type="checkbox" id="augmented" checked> Mostrar última columna como matriz aumentada</label>
+<div id="entry" class="editing" aria-label="Entradas de la matriz"></div>
+<div class="btn-row"><button id="start" type="button">Iniciar reducción</button></div>
+</section>
+<section class="panel" aria-labelledby="history-title">
+<div class="label-inline"><h2 id="history-title">03 · Historial paso a paso</h2><span id="status" class="badge">Sin iniciar</span></div>
+<p class="mini">Cada operación crea un nuevo paso. Puedes usar un camino diferente al de tus compañeros.</p>
+<div id="history"><div class="empty">Configura una matriz y presiona “Iniciar reducción”.</div></div>
+</section>
+<section class="panel" aria-labelledby="final-title">
+<h2 id="final-title">04 · Compara con la RREF final</h2>
+<p class="mini">Cuando quieras comprobar tu resultado, muestra la forma escalonada reducida por renglones (RREF) de la <strong>matriz inicial</strong>. Se calcula de manera independiente y no altera tus operaciones ni el historial.</p>
+<button id="toggle-final" type="button" class="secondary" aria-expanded="false" aria-controls="final-reference" disabled>Mostrar la RREF final</button>
+<div id="final-reference" hidden>
+ <h3>Resultado de referencia</h3>
+ <div id="final-matrix" class="math-scroll" aria-label="Matriz en forma escalonada reducida"></div>
+ <p id="final-comparison" class="comparison" role="status" aria-live="polite"></p>
+</div>
+</section>
+</div><div class="right-sticky">
+<section class="panel" aria-labelledby="operation-title">
+<h2 id="operation-title">02 · Tu siguiente operación</h2><p class="mini">Escribe una operación elemental y presiona aplicar.</p>
+<label for="operation">Operación por renglón</label><input class="operation-input" id="operation" type="text" placeholder="R2-2*R1" autocomplete="off" autocapitalize="characters" spellcheck="false">
+<div class="samples"><button type="button" class="secondary" data-op="R2-2*R1">R2-2*R1</button><button type="button" class="secondary" data-op="R1<->R2">R1↔R2</button><button type="button" class="secondary" data-op="R1/2">R1/2</button><button type="button" class="secondary" data-op="R1+1/2*R2">R1+1/2*R2</button></div>
+<div class="help"><strong>Operaciones admitidas</strong><div>Intercambiar: <code>R1&lt;-&gt;R2</code></div><div>Multiplicar por un escalar: <code>2*R1</code>, <code>R1/3</code></div><div>Sumar un múltiplo: <code>R2-2*R1</code>, <code>R1+R2</code></div><div>También: <code>R2=R2-2*R1</code> o <code>R2&lt;-R2-2*R1</code></div></div>
+<div class="btn-row"><button id="apply" type="button">Aplicar operación</button><button id="undo" type="button" class="secondary">Deshacer</button><button id="reset" type="button" class="secondary">Reiniciar</button></div>
+<div id="feedback" role="status" aria-live="polite" class="result"></div>
+</section>
+<section class="panel"><h2>Mis notas</h2><p class="mini">Anota tu estrategia, los pivotes o las dudas que encontraste.</p><textarea id="notes" placeholder="Ejemplo: Quiero obtener primero un pivote en la columna 1..."></textarea><div class="btn-row"><button id="export" type="button" class="secondary">Descargar procedimiento (.txt)</button></div><p class="note">Funciona sin registro. La matriz y tus notas se procesan en tu navegador y no se envían a un servidor. Descarga tu historial si deseas conservarlo.</p></section>
+</div></div></main><div class="footer">RREF Companion · Herramienta académica gratuita · Sin afiliación institucional</div>
+<script>
+'use strict';
+// Operaciones racionales exactas con BigInt. No se evalúan cadenas como código.
+const el=id=>document.getElementById(id), absolute=a=>a<0n?-a:a;
+function gcd(a,b){a=absolute(a);b=absolute(b);while(b!==0n){let t=a%b;a=b;b=t;}return a||1n;}
+function fraction(n,d=1n){n=BigInt(n);d=BigInt(d);if(d===0n)throw Error('No se permite dividir entre cero.');if(d<0n){n=-n;d=-d;}let g=gcd(n,d);return[n/g,d/g];}
+const sum=(a,b)=>fraction(a[0]*b[1]+b[0]*a[1],a[1]*b[1]);
+const times=(a,b)=>fraction(a[0]*b[0],a[1]*b[1]);
+const divide=(a,b)=>fraction(a[0]*b[1],a[1]*b[0]);
+const isZero=a=>a[0]===0n;
+const isOne=a=>a[0]===a[1];
+const format=a=>a[1]===1n?String(a[0]):`${a[0]}/${a[1]}`;
+const clone=m=>m.map(row=>row.map(x=>[...x]));
+function readNumber(text){
+ let value=String(text).trim().replace(',','.');
+ if(!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:\/[+-]?\d+(?:\.\d*)?)?$/.test(value))throw Error(`Número no válido: “${text}”. Usa, por ejemplo, -2, 0.5 o 3/4.`);
+ if(value.includes('/')){let [a,b]=value.split('/');return divide(readNumber(a),readNumber(b));}
+ let sign=value[0]==='-'?-1n:1n;value=value.replace(/^[+-]/,'');let [whole,decimal='']=value.split('.');return fraction(sign*BigInt((whole||'0')+decimal),10n**BigInt(decimal.length));
+}
+function size(){let rows=Number(el('rows').value),columns=Number(el('cols').value);if(!Number.isInteger(rows)||!Number.isInteger(columns)||rows<1||rows>8||columns<1||columns>8)throw Error('Las dimensiones deben ser números enteros del 1 al 8.');return[rows,columns];}
+let matrix=[],history=[];
+let finalReference=null;
+function createEntry(values){
+ let [r,c]=size(),root=el('entry');root.replaceChildren();let grid=document.createElement('div');grid.className='entry-matrix';grid.style.setProperty('--cols',c);
+ for(let i=0;i<r;i++)for(let j=0;j<c;j++){let field=document.createElement('input');field.type='text';field.value=values?.[i]?.[j]??'0';field.setAttribute('aria-label',`Renglón ${i+1}, columna ${j+1}`);if(el('augmented').checked&&j===c-1&&c>1)field.classList.add('augment');grid.appendChild(field);}
+ root.appendChild(grid);
+}
+function readEntry(){let [r,c]=size(),fields=[...el('entry').querySelectorAll('input')];if(fields.length!==r*c)throw Error('Pulsa “Actualizar tamaño” antes de iniciar.');return Array.from({length:r},(_,i)=>Array.from({length:c},(_,j)=>readNumber(fields[i*c+j].value)));}
+function checkedRow(value){let row=Number(value)-1;if(!Number.isInteger(row)||row<0||row>=matrix.length)throw Error(`El renglón R${value} no existe en esta matriz.`);return row;}
+const numberPattern='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:\\/[+-]?\\d+(?:\\.\\d*)?)?';
+function parseOperation(input){
+ let expr=input.toUpperCase().replace(/\s+/g,'').replace(/−|–/g,'-').replace(/×|·/g,'*').replace(/÷/g,'/').replace(/←/g,'<-').replace(/↔/g,'<->');
+ if(!expr)throw Error('Escribe una operación antes de aplicarla.');
+ let match=expr.match(/^R(\d+)<->R(\d+)$/);
+ if(match){let target=checkedRow(match[1]),source=checkedRow(match[2]);if(target===source)throw Error('Para intercambiar, selecciona dos renglones distintos.');return{type:'swap',target,source,label:`R${target+1} ↔ R${source+1}`};}
+ let assigned=null,split=expr.match(/^R(\d+)(?:<-|=)(.+)$/);
+ if(split){assigned=checkedRow(split[1]);expr=split[2];}
+ // Ri / k
+ match=expr.match(new RegExp('^R(\\d+)\\/('+numberPattern+')$'));
+ if(match){let target=checkedRow(match[1]);if(assigned!==null&&assigned!==target)throw Error('El renglón de destino debe coincidir con el de la operación.');let factor=divide(fraction(1n),readNumber(match[2]));if(isZero(factor))throw Error('El factor no puede ser cero.');return{type:'scale',target,factor,label:`R${target+1} ← (${format(factor)}) R${target+1}`};}
+ // k*Ri or Ri*k
+ match=expr.match(new RegExp('^('+numberPattern+')\\*?R(\\d+)$'));
+ let reversed=false;if(!match){match=expr.match(new RegExp('^R(\\d+)\\*('+numberPattern+')$'));reversed=true;}
+ if(match){let target=checkedRow(reversed?match[1]:match[2]);if(assigned!==null&&assigned!==target)throw Error('El renglón de destino debe coincidir con el de la operación.');let factor=readNumber(reversed?match[2]:match[1]);if(isZero(factor))throw Error('Multiplicar por cero no es una operación elemental válida.');return{type:'scale',target,factor,label:`R${target+1} ← (${format(factor)}) R${target+1}`};}
+ // Ri +/- k*Rj
+ match=expr.match(new RegExp('^R(\\d+)([+-])('+numberPattern.replace('[+-]?','')+'|)\\*?R(\\d+)$'));
+ if(match){let target=checkedRow(match[1]),source=checkedRow(match[4]);if(assigned!==null&&assigned!==target)throw Error('El renglón de destino debe coincidir con el de la operación.');if(target===source)throw Error('Para multiplicar un solo renglón, escribe por ejemplo 2*R1.');let coefficient=readNumber(`${match[2]==='-'?'-':''}${match[3]||'1'}`);let magnitude=fraction(absolute(coefficient[0]),coefficient[1]);return{type:'add',target,source,coefficient,label:`R${target+1} ← R${target+1} ${coefficient[0]<0n?'−':'+'} (${format(magnitude)}) R${source+1}`};}
+ throw Error('Operación no reconocida. Prueba R2-2*R1, R1<->R2, 3*R1 o R1/2.');
+}
+function isRref(m){let previous=-1,seenZero=false;for(let i=0;i<m.length;i++){let pivot=m[i].findIndex(v=>!isZero(v));if(pivot===-1){seenZero=true;continue;}if(seenZero||pivot<=previous||!isOne(m[i][pivot]))return false;for(let k=0;k<m.length;k++)if(k!==i&&!isZero(m[k][pivot]))return false;previous=pivot;}return true;}
+// Gauss-Jordan con aritmética racional exacta: solo calcula el resultado,
+// sin modificar ni revelar las operaciones elegidas por el estudiante.
+function calculateRref(initial){
+ const result=clone(initial),rows=result.length,columns=result[0].length;
+ let pivotRow=0;
+ for(let col=0;col<columns&&pivotRow<rows;col++){
+  let chosen=pivotRow;
+  while(chosen<rows&&isZero(result[chosen][col]))chosen++;
+  if(chosen===rows)continue;
+  if(chosen!==pivotRow)[result[chosen],result[pivotRow]]=[result[pivotRow],result[chosen]];
+  const pivot=result[pivotRow][col];
+  result[pivotRow]=result[pivotRow].map(value=>divide(value,pivot));
+  for(let row=0;row<rows;row++){
+   if(row===pivotRow)continue;
+   const coefficient=result[row][col];
+   if(isZero(coefficient))continue;
+   result[row]=result[row].map((value,j)=>sum(value,times(fraction(-coefficient[0],coefficient[1]),result[pivotRow][j])));
+  }
+  pivotRow++;
+ }
+ return result;
+}
+function sameMatrix(a,b){return a.length===b.length&&a.every((row,i)=>row.length===b[i].length&&row.every((value,j)=>value[0]===b[i][j][0]&&value[1]===b[i][j][1]));}
+function hideFinal(){
+ el('final-reference').hidden=true;
+ el('toggle-final').textContent='Mostrar la RREF final';
+ el('toggle-final').setAttribute('aria-expanded','false');
+}
+function showFinal(){
+ if(!history.length)return;
+ if(finalReference===null)finalReference=calculateRref(history[0].matrix);
+ let root=el('final-matrix');root.replaceChildren();
+ let grid=document.createElement('div');grid.className='display-matrix';grid.style.setProperty('--cols',finalReference[0].length);
+ finalReference.forEach(row=>row.forEach((value,j)=>{
+  let span=document.createElement('span');span.textContent=format(value);
+  if(el('augmented').checked&&j===row.length-1&&row.length>1)span.className='augment';
+  grid.appendChild(span);
+ }));
+ root.appendChild(grid);
+ let comparison=el('final-comparison');
+ if(sameMatrix(matrix,finalReference)){
+  comparison.textContent='✓ Tu matriz actual coincide exactamente con la RREF final.';
+  comparison.className='comparison match';
+ }else{
+  comparison.textContent='Tu matriz actual todavía no coincide con la RREF final. Puedes comparar las entradas y continuar tus operaciones.';
+  comparison.className='comparison waiting';
+ }
+}
+function notify(message,error=false){let node=el('feedback');node.textContent=message;node.className=error?'result error':'result';}
+function renderHistory(){
+ let root=el('history');root.replaceChildren();
+ if(!history.length){let block=document.createElement('div');block.className='empty';block.textContent='Configura una matriz y presiona “Iniciar reducción”.';root.appendChild(block);el('status').textContent='Sin iniciar';el('status').className='badge';el('undo').disabled=true;return;}
+ history.forEach((step,i)=>{
+  let wrap=document.createElement('article');wrap.className='step';let title=document.createElement('div');title.className='step-title';
+  let count=document.createElement('span');count.className='step-count';count.textContent=i===0?'A':i;title.appendChild(count);
+  title.appendChild(document.createTextNode(i===0?'Matriz inicial':step.label));wrap.appendChild(title);
+  let scroll=document.createElement('div');scroll.className='math-scroll';let grid=document.createElement('div');grid.className='display-matrix';grid.style.setProperty('--cols',step.matrix[0].length);
+  step.matrix.forEach(row=>row.forEach((value,j)=>{let span=document.createElement('span');span.textContent=format(value);if(el('augmented').checked&&j===row.length-1&&row.length>1)span.className='augment';grid.appendChild(span);}));
+  scroll.appendChild(grid);wrap.appendChild(scroll);root.appendChild(wrap);
+ });
+ let done=isRref(matrix);el('status').textContent=done?'✓ RREF alcanzada':'Reducción en curso';el('status').className=done?'badge success':'badge';el('undo').disabled=history.length<2;
+ if(!el('final-reference').hidden)showFinal();
+}
+function start(){try{const newMatrix=readEntry();matrix=newMatrix;history=[{label:'Matriz inicial',matrix:clone(matrix)}];finalReference=null;hideFinal();el('toggle-final').disabled=false;renderHistory();notify('Matriz inicial cargada. Ingresa la primera operación.');}catch(error){notify(error.message,true);}}
+function apply(){try{if(!history.length)throw Error('Primero presiona “Iniciar reducción”.');let operation=parseOperation(el('operation').value);let next=clone(matrix);
+ if(operation.type==='swap') [next[operation.target],next[operation.source]]=[next[operation.source],next[operation.target]];
+ if(operation.type==='scale')next[operation.target]=next[operation.target].map(v=>times(v,operation.factor));
+ if(operation.type==='add')next[operation.target]=next[operation.target].map((v,j)=>sum(v,times(operation.coefficient,matrix[operation.source][j])));
+ matrix=next;history.push({label:operation.label,matrix:clone(matrix)});renderHistory();notify('Operación aplicada correctamente.');el('operation').select();
+ }catch(error){notify(error.message,true);}}
+el('dimensions').addEventListener('click',()=>{try{createEntry();notify('Tamaño actualizado. Completa la matriz y presiona “Iniciar reducción”.');}catch(error){notify(error.message,true);}});
+el('example').addEventListener('click',()=>{el('rows').value=2;el('cols').value=3;createEntry([['1','5','1'],['2','11','5']]);start();});
+el('augmented').addEventListener('change',()=>{const current=[...el('entry').querySelectorAll('input')].map(input=>input.value);try{let [r,c]=size();if(current.length===r*c)createEntry(Array.from({length:r},(_,i)=>current.slice(i*c,(i+1)*c)));else createEntry();renderHistory();}catch(error){notify(error.message,true);}});
+el('start').addEventListener('click',start);el('apply').addEventListener('click',apply);
+el('toggle-final').addEventListener('click',()=>{if(el('final-reference').hidden){el('final-reference').hidden=false;el('toggle-final').textContent='Ocultar la RREF final';el('toggle-final').setAttribute('aria-expanded','true');showFinal();}else hideFinal();});
+el('operation').addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();apply();}});
+document.querySelectorAll('[data-op]').forEach(btn=>btn.addEventListener('click',()=>{el('operation').value=btn.dataset.op;el('operation').focus();}));
+el('undo').addEventListener('click',()=>{if(history.length>1){history.pop();matrix=clone(history.at(-1).matrix);renderHistory();notify('Se deshizo la última operación.');}});
+el('reset').addEventListener('click',()=>{if(history.length){history=history.slice(0,1);matrix=clone(history[0].matrix);renderHistory();notify('Se restauró la matriz inicial.');}});
+el('export').addEventListener('click',()=>{
+ if(!history.length){notify('Primero inicia una matriz para generar un procedimiento.',true);return;}
+ let content=['RREF Companion — Historial de operaciones','',''];
+ history.forEach((step,i)=>{content.push(i===0?'Matriz inicial':`Paso ${i}: ${step.label}`);step.matrix.forEach(row=>content.push(row.map(format).join('\t')));content.push('');});
+ content.push('Notas:',el('notes').value,'','Generado en RREF Companion.');
+ let blob=new Blob([content.join('\n')],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='rref-companion-procedimiento.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),5000);
+});
+createEntry([['1','5','1'],['2','11','5']]);renderHistory();
+</script>
 </body>
 </html>
